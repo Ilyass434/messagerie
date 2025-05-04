@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Vérifier si les champs sont vides
     if (empty($username) || empty($password)) {
         $_SESSION['error'] = 'Tous les champs doivent être remplis.';
-        header('Location: login.php');
+        header('Location: index.php');
         exit();
     }
 
@@ -35,21 +35,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['success'] = 'Connexion réussie !';
 
                 // Rediriger vers la page d'accueil ou tableau de bord
-                header('Location: index.php');
+                header('Location: dashboarddashboard.php');
                 exit();
             } else {
                 $_SESSION['error'] = 'Mot de passe incorrect.';
-                header('Location: login.php');
+                header('Location: index.php');
                 exit();
             }
         } else {
             $_SESSION['error'] = 'Aucun utilisateur trouvé avec ce nom d\'utilisateur.';
-            header('Location: login.php');
+            header('Location: index.php');
             exit();
         }
     } catch (PDOException $e) {
         $_SESSION['error'] = 'Erreur de connexion à la base de données.';
-        header('Location: login.php');
+        header('Location: index.php');
         exit();
     }
 }

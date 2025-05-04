@@ -1,121 +1,87 @@
-<?php
-session_start();
-require_once '../includes/database.php';
-
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-    exit();
-}
-
-$user_id = $_SESSION['user_id'];
-
-// Récupérer les amis de l'utilisateur
-$queryFriends = "SELECT DISTINCT users.id, users.username FROM friends
-                 JOIN users ON (friends.friend_id = users.id OR friends.user_id = users.id)
-                 WHERE ((friends.user_id = :user_id AND friends.status = 'accepted')
-                        OR (friends.friend_id = :user_id AND friends.status = 'accepted'))
-                 AND users.id != :user_id";
-
-$stmtFriends = $pdo->prepare($queryFriends);
-$stmtFriends->execute([':user_id' => $user_id]);
-$friends = $stmtFriends->fetchAll(PDO::FETCH_ASSOC);
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Messagerie</title>
+    <title>Connexion</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background: #f3e5f5;
+            background: linear-gradient(135deg, #9c27b0, #e91e63);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        .navbar {
-            background: linear-gradient(90deg, #9c27b0, #e91e63);
-            border-radius: 0 0 15px 15px;
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background-color: #fff;
         }
 
-        .navbar .navbar-brand {
-            font-size: 1.5rem;
+        .card-title {
             font-weight: bold;
+            color: #9c27b0;
         }
 
-        .navbar .nav-link {
-            font-size: 1rem;
-            padding: 10px 15px;
-            transition: background 0.3s ease;
-            color: white !important;
+        .form-label {
+            color: #555;
+            font-weight: 500;
         }
 
-        .navbar .nav-link:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            color: white !important;
-        }
-
-        .container h3 {
-            color: #333;
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 30px;
-        }
-
-        .list-group-item {
-            background: #fff;
+        .form-control {
             border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 15px;
-            padding: 15px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .list-group-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            border: 1px solid #ccc;
         }
 
         .btn-primary {
-            background-color: #e91e63;
-            border-color: #e91e63;
-            transition: background 0.3s ease, border-color 0.3s ease;
+            background-color: #9c27b0;
+            border: none;
+            border-radius: 10px;
+            font-weight: 500;
         }
 
         .btn-primary:hover {
-            background-color: #d81b60;
-            border-color: #d81b60;
+            background-color: #7b1fa2;
         }
 
-        .btn-link {
-            color: #333;
-            font-weight: bold;
+        a {
+            color: #9c27b0;
             text-decoration: none;
-            transition: color 0.3s ease;
         }
 
-        .btn-link:hover {
-            color: #d81b60;
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .form-check-label {
+            font-size: 0.9rem;
         }
     </style>
+
 </head>
-<body>
+<body class="bg-light">
 
-<?php include "../includes/header.php"?>
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card" style="width: 30rem;">
+        <div class="card-body">
+            <h3 class="card-title text-center mb-4">Se connecter</h3>
 
-<div class="container mt-5">
-    <h3>Bienvenue, <?php echo htmlspecialchars($_SESSION['username']); ?></h3>
+            <form action="login_process.php" method="POST">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Nom d'utilisateur</label>
+                    <input type="text" class="form-control" id="username" name="username" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Mot de passe</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+            </form>
 
-    <div class="list-group">
-        <?php foreach ($friends as $friend): ?>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <a href="profile.php?user_id=<?php echo $friend['id']; ?>" class="btn btn-link"><?php echo htmlspecialchars($friend['username']); ?></a>
-
-                <a href="chat.php?friend_id=<?php echo $friend['id']; ?>" class="btn btn-primary btn-sm">Envoyer un message</a>
-            </li>
-        <?php endforeach; ?>
+            <div class="mt-3 text-center">
+                <p>Pas encore de compte? <a href="register.php">S'inscrire</a></p>
+            </div>
+        </div>
     </div>
 </div>
 

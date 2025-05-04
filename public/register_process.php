@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($stmt->execute()) {
         echo "Inscription réussie !";
-        header("Location: login.php");
+        header("Location: index.php");
         exit;
     } else {
         echo "Erreur lors de l'inscription.";

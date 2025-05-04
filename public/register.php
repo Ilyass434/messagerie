@@ -83,7 +83,7 @@
             </form>
 
             <div class="mt-3 text-center">
-                <p>Vous avez déjà un compte? <a href="login.php">Se connecter</a></p>
+                <p>Vous avez déjà un compte? <a href="index.php">Se connecter</a></p>
             </div>
         </div>
     </div>
