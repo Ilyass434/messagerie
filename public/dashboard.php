@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Récupérer les amis de l'utilisateur
+
 $queryFriends = "SELECT DISTINCT users.id, users.username FROM friends
                  JOIN users ON (friends.friend_id = users.id OR friends.user_id = users.id)
                  WHERE ((friends.user_id = :user_id AND friends.status = 'accepted')
