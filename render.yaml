@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: messagerie-ilyass
+    env: php
+    plan: free
+    rootDir: public
+    buildCommand: ""
+    startCommand: ""
+    envVars:
+      - key: DATABASE_URL
+        value: postgresql://postgres:Ilyasshayar123@db.gzhutesetekhnnhjmetz.supabase.co:5432/postgres

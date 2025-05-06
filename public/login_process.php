@@ -23,12 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bindParam(':username', $username);
         $stmt->execute();
 
-        // Vérifier si l'utilisateur existe
+
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($user) {
-            // Vérifier le mot de passe
+
             if ($user['password'] == $password) {
-                // Le mot de passe est correct, démarrer la session
+
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['role'] = $user['role'];
