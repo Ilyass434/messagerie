@@ -1,0 +1,28 @@
+# Fichiers et répertoires générés
+/node_modules/
+/vendor/
+/public/assets/
+/public/uploads/
+/dist/
+/build/
+
+# Fichiers de log
+*.log
+*.bak
+
+# Fichiers temporaires
+*.swp
+*.swo
+
+# Environnement local
+.env
+
+# Fichiers de configuration IDE
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Fichiers système
+.DS_Store
+Thumbs.db
